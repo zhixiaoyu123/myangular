@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{width: 200px;height: 200px;border:1px solid red;}
+    </style>
+</head>
+<body>
+<div></div>
+<button type="button">按钮</button>
+</body>
+<script>
+    window.onpopstate=function () {
+
+
+    var url=location.href;
+    if(url.indexOf("#")>-1){
+        var ajaxurl=url.slice(url.indexOf("#")+1);
+        var xmlobj=new XMLHttpRequest();
+        xmlobj.onload=function () {
+            document.querySelector("div").innerHTML=xmlobj.response;
+        }
+        xmlobj.open("get","ajaxurl");
+        xml.send();
+    }else{
+        document.querySelector("div").innerHTML="";
+    }
+    document.querySelector("button").onclick=function () {
+        var newrul=url+"demo1.html";
+        location
+            var xmlobj=new XMLHttpRequest();
+            xmlobj.onload=function () {
+                document.querySelector("div").innerHTML=xmlobj.response;
+            }
+    }
+
+    xmlobj.open("get","demo1.html");
+    xml.send();
+    }
+</script>
+</html>

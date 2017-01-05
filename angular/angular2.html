@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="node_modules/angular/angular.min.js"></script>
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0;list-style: none;}
+    </style>
+</head>
+<body ng-app="myApp" ng-init="num=0;price=0;names=[{name:'zhangsan',age:24},{name:'lisi',age:18},{name:'wangmazi',age:12}];">
+<h2>价格计算器</h2>
+数量： <input type="text" ng-model="num"><br>
+单价： <input type="text" ng-model="price"><br>
+<p>总价： <b>{{num*price}}</b></p>
+<ul>
+    <li ng-repeat="x in names">{{x.name+':'+x.age}}</li>
+</ul>
+<run></run>
+<div ng-controller="ctrl">
+    <input type="text" ng-model="aa">+
+    <input type="text" ng-model="bb">=
+    <input type="text" ng-model="cc">
+</div>
+</body>
+<script>
+   var app=angular.module("myApp",[ ]);
+   app.directive("run",function () {
+       return{
+           template:"<h1>hah</h1>"
+       };
+   });
+   app.controller("ctrl",function ($scope) {
+       $scope.aa=0;
+       $scope.bb=0;
+       $scope.cc=$scope.aa*1+$scope.bb*1;
+   })
+</script>
+</html>

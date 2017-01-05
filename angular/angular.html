@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload=function () {
+            var num1=document.getElementById("one");
+            var num2=document.getElementById("two");
+            var sum=document.getElementById("sum");
+            console.log(typeof num2)
+            num1.oninput=function () {
+                num1=parseFloat(this.value)?parseFloat(this.value):0;
+                num2=parseFloat(num2.value)?parseFloat(num2.value):0;
+                console.log(typeof num2)
+                sum.value=num1+num2;
+            }
+            console.log(typeof num2)
+
+            num2.oninput=function () {
+                console.log(typeof num2)
+                num2=parseFloat(this.value)?parseFloat(this.value):0;
+                sum.value=num1+num2*1;
+                num1=parseFloat(num1.value)?parseFloat(num1.value):0;
+
+
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="text" id="one">
++
+<input type="text" id="two">
+=
+<input type="text" id="sum">
+</body>
+</html>

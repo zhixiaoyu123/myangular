@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="node_modules/angular/angular.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="icon/iconfont.css">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0;list-style: none;}
+        .table tr th,.table tr td{text-align: center;font-size: 14px;}
+        input{width: 20px;text-align: center}
+        .warning .input-group .left{background: #ccc}
+        .tsk{width: 100%;text-align:center;line-height: 30px;font-size: 20px;}
+        .dropdown{border:1px solid red;}
+        .search{width: 300px;text-align: left;}
+        .sousuo{font-size: 20px;color: red;line-height: 10px;}
+    </style>
+</head>
+<body ng-app="myApp">
+<div ng-controller="ctrl">
+    <div class="tsk" ng-show="data.length==0">您还没有添加任何商品哟！</div>
+    <div class="input-group" ng-hide="data.length==0">
+        <span class="input-group-addon">
+            <div class="iconfont icon-sousu sousuo"></div>
+        </span>
+        <input type="text" class="form-control search" placeholder="name" ng-model="search">
+    </div>
+<table class="table table-bordered" ng-hide="data.length==0">
+    <tr class="active">
+        <th>商品名称</th>
+        <th>
+            商品单价
+            <div ng-click=order() ng-class="type"><span class="caret"></span></div>
+
+        </th>
+        <th>商品数量</th>
+        <th>商品总价</th>
+        <th>操作</th>
+    </tr>
+
+    <!-- On cells (`td` or `th`) -->
+    <tr ng-repeat="item in data | filter :search | orderBy:price">
+        <td class="active">{{item.name}}</td>
+        <td class="success">{{item.price}}</td>
+        <td class="warning">
+            <div class="input-group">
+                <span class="input-group-addon" style="width: 100px;margin: auto" ng-click=jian(item.id)>-</span>
+                <input type="text" class="form-control" ng-model="item.num">
+                <span class="input-group-addon right" ng-click=add(item.id)>+</span>
+            </div>
+        </td>
+        <td class="danger">
+           {{item.price*item.num}}
+        </td>
+        <td class="info">
+            <button type="button" class="btn btn-danger" ng-click=del(item.id)>删除</button>
+        </td>
+    </tr>
+    <tr>
+        <td>总价</td>
+        <td>{{getPrice()}}</td>
+        <td>总数</td>
+        <td>{{getNum()}}</td>
+        <td> <button type="button" class="btn btn-danger" ng-click=delAll()>清空购物车</button></td>
+    </tr>
+
+</table>
+    <div>{{date|date:yy-MM-d}}</div>
+</div>
+</body>
+<script>
+var app=angular.module("myApp",[]);
+app.controller("ctrl",function ($scope) {
+    $scope.date=new Date();
+    $scope.search="";
+    $scope.price="";
+    $scope.order=function () {
+        if($scope.type==""){
+            $scope.type="dropup";
+            $scope.price="-";
+        }else{
+            $scope.type="";
+            $scope.price="";
+        }
+    };
+    $scope.data=[
+        {name:'衣服',price:300,num:1,id:1},
+        {name:'裤子',price:200,num:2,id:2},
+        {name:'裙子',price:100,num:3,id:3},
+        {name:'鞋',price:400,num:4,id:4}
+    ];
+    $scope.getPrice=function () {
+        var sumPrice=0;
+        for(var i=0;i<$scope.data.length;i++){
+            sumPrice+=$scope.data[i].price*$scope.data[i].num;
+        }
+        return sumPrice;
+    };
+    $scope.getNum=function () {
+        var sumNum=0;
+        for(var i=0;i<$scope.data.length;i++){
+            var num=parseInt($scope.data[i].num)
+            if(num&&num>0) {
+                sumNum += $scope.data[i].num * 1;
+            }else{
+                $scope.data[i].num =0;
+            }
+        }
+        return sumNum;
+    };
+    $scope.del=function (id) {
+        for(var i=0;i<$scope.data.length;i++){
+            if($scope.data[i].id==id){
+                $scope.data.splice(i,1)
+            }
+        }
+    };
+    $scope.delAll=function () {
+        $scope.data=[];
+    };
+    $scope.add=function (id) {
+        for(var i=0;i<$scope.data.length;i++){
+            if($scope.data[i].id==id){
+                $scope.data[i].num+=1;
+            }
+        }
+    };
+    $scope.jian=function (id) {
+        for(var i=0;i<$scope.data.length;i++){
+            if($scope.data[i].id==id){
+                $scope.data[i].num-=1;
+            }
+        }
+    }
+})
+</script>
+</html>
